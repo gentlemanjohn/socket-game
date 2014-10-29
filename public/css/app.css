@@ -1,0 +1,170 @@
+html, button, input, select, textarea,
+.pure-g [class *= "pure-u"] {
+    font: 1em/1.4 sans-serif;
+}
+
+.pure-g > div {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.container {
+	display: block;
+	margin: 0 auto;
+}
+
+@media screen and (min-width: 35.5em) {
+	.container {
+		width: 540px;
+	}
+}
+
+@media screen and (min-width: 48em) {
+	.container {
+		width: 720px;
+	}
+	.l-box {
+	    padding: 0 2% 0 0;
+	    -webkit-box-sizing: border-box;
+	    -moz-box-sizing: border-box;
+	    box-sizing: border-box;
+	}
+	.l-box:last-child {
+		padding-right: 0;
+	}
+}
+
+@media screen and (min-width: 64em) {
+	.container {
+		width: 960px;
+	}
+}
+
+@media screen and (min-width: 80em) {
+	.container {
+		width: 1200px;
+	}
+}
+
+.glyph {
+    font: 1em 'FontAwesome';
+    text-transform: none;  
+    display: inline-block;
+    text-align: center;
+}
+
+span.glyph {
+    width: 1em;
+}
+
+a.signin {
+	margin-bottom: 1.5em;
+}
+
+/* Socket Game */
+
+div.centering {
+	width: 800px;
+	margin: 0 auto;
+}
+
+div.board {
+	display: inline-block;
+	position: relative;
+	height: 480px;
+	width: 800px;
+	border: 1px solid #eee;
+	background: #eee url(../img/skulls.png) center center repeat;
+	/*background-color: white;
+	background-image: linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #eee 75%), 
+	linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #eee 75%);
+	background-size:100px 100px;
+	background-position: 0 0, 50px 50px;*/
+}
+
+div.board div.player {
+	position: absolute;
+	background: transparent url(../img/char1.png) 0 0 no-repeat;
+	top: 0;
+	left: 0;
+	height: 32px;
+	width: 32px;
+    border-color: #000;
+    border-style: solid;
+    border-width: 0;
+    z-index: 99;
+    -webkit-transition: top linear 100ms, left linear 100ms;
+    transition: top linear 100ms, left linear 100ms;
+    box-sizing: border-box;
+}
+
+div.board div.player.up {
+	background-position: 0 -96px;
+}
+
+div.board div.player.right {
+	background-position: 0 -64px;
+}
+
+div.board div.player.down {
+	background-position: 0 0;
+}
+
+div.board div.player.left {
+	background-position: 0 -32px;
+}
+
+section.interact {
+	width: 800px;
+}
+
+div.chat-wrapper {
+	width: 70%;
+	margin-right: 5%;
+	float: left;
+}
+
+div.chat-wrapper #chat {
+  height: 100px;
+  border: 1px solid #ccc;
+  padding: 1em;
+  overflow-y: scroll;
+  background: #efefef;
+}
+
+div.chat-wrapper #chat ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+div.chat-wrapper form {
+	position: relative;
+}
+
+div.chat-wrapper form input[type="text"] {
+	width: 100%;
+	margin: 0;
+    box-sizing: border-box;
+}
+
+div.chat-wrapper form input[type="submit"] {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+div.controls {
+	float: right;
+}
+
+div.controls > div {
+	text-align: center;
+	margin-bottom: .25em;
+}
+
+div.controls > div button {
+	width: 60px;
+	height: 60px;
+}
