@@ -15,7 +15,7 @@ angular.module('myApp', [
   .run(['$rootScope', '$state', '$stateParams', function ($rootScope, $state, $stateParams) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
-    $state.appTitle = "Socket.IO Game Demo";
+    $state.appTitle = "Socket.IO Game";
     $rootScope.baseUrl = document.getElementsByTagName('base')[0].href;
     if($rootScope.baseUrl.substr(-1) == '/') {
       $rootScope.baseUrl = $rootScope.baseUrl.substr(0, $rootScope.baseUrl.length - 1);
