@@ -16,10 +16,6 @@ angular.module('myApp', [
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
     $state.appTitle = "Socket.IO Game";
-    $rootScope.baseUrl = document.getElementsByTagName('base')[0].href;
-    if($rootScope.baseUrl.substr(-1) == '/') {
-      $rootScope.baseUrl = $rootScope.baseUrl.substr(0, $rootScope.baseUrl.length - 1);
-    }
   }])
 
   .config(function($locationProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
@@ -42,28 +38,13 @@ angular.module('myApp', [
       return deferred.promise;
     }
 
-    $httpProvider.responseInterceptors.push(function($q, $location) {
-      return function(promise) {
-        return promise.then(
-          // Success: just return the response
-          function(response){
-            return response;
-          }, 
-          // Error: check the error status to get only the 401
-          function(response) {
-            if (response.status === 401)
-              $location.url('/login');
-            return $q.reject(response);
-          }
-        );
-      }
-    });
+    $httpProvider.interceptors.push('myHttpInterceptor');
 
     $stateProvider
       .state('Home', {
         url: '/',
         templateUrl: 'partials/home.html',
-        controller: 'AppCtrl'
+        controller: 'HomeCtrl'
       })
       .state('Login', {
         url: '/login',

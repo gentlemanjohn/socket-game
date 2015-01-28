@@ -3,11 +3,11 @@
     <div class="pure-u-1">
       <h2>Admin Page</h2>
       <a class="pure-button pure-button-secondary" href="#/" ng-click="logout()">Sign Out</a>
-      <!-- <h3>Bear Generator</h3>
+      <h3>Object Generator</h3>
       <form class="pure-form" ng-submit="submit()">
         <input type="text" ng-model="formData.name" name="text" placeholder="Bear Name">
         <input class="pure-button" type="submit" id="submit" value="Submit">
-      </form> -->
+      </form>
     </div>
   </div>
   <div class="pure-g">
@@ -25,9 +25,6 @@
             <th>
               &nbsp;
             </th>
-            <th>
-              &nbsp;
-            </th>
           </tr>
         </thead>
         <tbody>
@@ -37,11 +34,6 @@
             </td>
             <td>
               {{player.x}},{{player.y}}
-            </td>
-            <td>
-              <form class="pure-form" ng-submit="modify(player._id)">
-                <input class="pure-button pure-button" type="submit" id="submit" value="Modify">
-              </form>
             </td>
             <td>
               <form class="pure-form" ng-submit="delete(player._id)">

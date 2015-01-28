@@ -1,3 +1,9 @@
+* {
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 html, button, input, select, textarea,
 .pure-g [class *= "pure-u"] {
     font: 1em/1.4 sans-serif;
@@ -7,44 +13,6 @@ html, button, input, select, textarea,
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-}
-
-.container {
-	display: block;
-	margin: 0 auto;
-}
-
-@media screen and (min-width: 35.5em) {
-	.container {
-		width: 540px;
-	}
-}
-
-@media screen and (min-width: 48em) {
-	.container {
-		width: 720px;
-	}
-	.l-box {
-	    padding: 0 2% 0 0;
-	    -webkit-box-sizing: border-box;
-	    -moz-box-sizing: border-box;
-	    box-sizing: border-box;
-	}
-	.l-box:last-child {
-		padding-right: 0;
-	}
-}
-
-@media screen and (min-width: 64em) {
-	.container {
-		width: 960px;
-	}
-}
-
-@media screen and (min-width: 80em) {
-	.container {
-		width: 1200px;
-	}
 }
 
 .glyph {
@@ -62,25 +30,64 @@ a.signin {
 	margin-bottom: 1.5em;
 }
 
+div.demo.panda {
+	top: 192px;
+	left: 368px;
+	background: url(../img/panda.gif) center center no-repeat;
+	height: 96px;
+	width: 96px;
+	display: none;
+}
+
+.demo {
+	position: absolute;
+	z-index:4;
+}
+
+button.demo.add,
+button.demo.destroy {
+	top: 320px;
+	height: 32px;
+	width: 32px;
+}
+
+button.demo.add {
+	left: 448px;
+}
+
+button.demo.destroy {
+	left: 320px;
+
+}
+
 /* Socket Game */
 
-div.centering {
-	width: 800px;
-	margin: 0 auto;
+div.viewport {
+	border-bottom: 1px solid #eee;
+	background: #000;
+	position: fixed;
+	top:0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 }
 
 div.board {
 	display: inline-block;
 	position: relative;
-	height: 480px;
-	width: 800px;
-	border: 1px solid #eee;
 	background: #eee url(../img/skulls.png) center center repeat;
-	/*background-color: white;
-	background-image: linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #eee 75%), 
-	linear-gradient(45deg, #eee 25%, transparent 25%, transparent 75%, #eee 75%);
-	background-size:100px 100px;
-	background-position: 0 0, 50px 50px;*/
+	cursor: pointer;
+	-webkit-transition: all linear 96ms;
+    transition: all linear 96ms;
+}
+
+div.board div.foreground {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 3;
 }
 
 div.board div.player {
@@ -92,31 +99,133 @@ div.board div.player {
 	width: 32px;
     border-color: #000;
     border-style: solid;
-    border-width: 0;
-    z-index: 99;
-    -webkit-transition: top linear 100ms, left linear 100ms;
-    transition: top linear 100ms, left linear 100ms;
+    border-width: 0px;
+    z-index: 2;
+    -webkit-transition: top linear 96ms, left linear 96ms;
+    transition: top linear 96ms, left linear 96ms;
     box-sizing: border-box;
+}
+
+
+@-webkit-keyframes movingup {
+    0%   {background-position: 0 -96px;}
+    25%  {background-position: -32px -96px;}
+    50%  {background-position: -64px -96px;}
+    75%  {background-position: -32px -96px;}
+    100% {background-position: 0 -96px;}
+}
+
+@keyframes movingup {
+    0%   {background-position: 0 -96px;}
+    25%  {background-position: -32px -96px;}
+    50%  {background-position: -64px -96px;}
+    75%  {background-position: -32px -96px;}
+    100% {background-position: 0 -96px;}
 }
 
 div.board div.player.up {
 	background-position: 0 -96px;
+	
+}
+
+div.board div.player.moving.up {
+	-webkit-animation: movingup 1s step-start infinite;
+    animation: movingup 1s step-start infinite;
+}
+
+@-webkit-keyframes movingright {
+    0%   {background-position: 0 -64px;}
+    25%  {background-position: -32px -64px;}
+    50%  {background-position: -64px -64px;}
+    75%  {background-position: -32px -64px;}
+    100% {background-position: 0 -64px;}
+}
+
+@keyframes movingright {
+    0%   {background-position: 0 -64px;}
+    25%  {background-position: -32px -64px;}
+    50%  {background-position: -64px -64px;}
+    75%  {background-position: -32px -64px;}
+    100% {background-position: 0 -64px;}
 }
 
 div.board div.player.right {
 	background-position: 0 -64px;
 }
 
+div.board div.player.moving.right {
+	-webkit-animation: movingright 1s step-start infinite;
+    animation: movingright 1s step-start infinite;
+}
+
+@-webkit-keyframes movingdown {
+    0%   {background-position: 0 0;}
+    25%  {background-position: -32px 0;}
+    50%  {background-position: -64px 0;}
+    75%  {background-position: -32px 0;}
+    100% {background-position: 0 0;}
+}
+
+@keyframes movingdown {
+    0%   {background-position: 0 0;}
+    25%  {background-position: -32px 0;}
+    50%  {background-position: -64px 0;}
+    75%  {background-position: -32px 0;}
+    100% {background-position: 0 0;}
+}
+
 div.board div.player.down {
 	background-position: 0 0;
+}
+
+div.board div.player.moving.down {
+	-webkit-animation: movingdown 1s step-start infinite;
+    animation: movingdown 1s step-start infinite;
+}
+
+@-webkit-keyframes movingleft {
+    0%   {background-position: 0 -32px;}
+    25%  {background-position: -32px -32px;}
+    50%  {background-position: -64px -32px;}
+    75%  {background-position: -32px -32px;}
+    100% {background-position: 0 -32px;}
+}
+
+@keyframes movingleft {
+    0%   {background-position: 0 -32px;}
+    25%  {background-position: -32px -32px;}
+    50%  {background-position: -64px -32px;}
+    75%  {background-position: -32px -32px;}
+    100% {background-position: 0 -32px;}
 }
 
 div.board div.player.left {
 	background-position: 0 -32px;
 }
 
+div.board div.player.moving.left {
+	-webkit-animation: movingleft 1s step-start infinite;
+    animation: movingleft 1s step-start infinite;
+}
+
 section.interact {
-	width: 800px;
+	width: 100%;
+}
+
+.dashboard {
+	display: block;
+	margin: 0 auto;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 100px;
+	/*background: #fff;*/
+}
+
+div.centering {
+	width: 100%;
+	margin: 0 auto;
 }
 
 div.chat-wrapper {
@@ -126,7 +235,7 @@ div.chat-wrapper {
 }
 
 div.chat-wrapper #chat {
-  height: 100px;
+  height: 40px;
   border: 1px solid #ccc;
   padding: 1em;
   overflow-y: scroll;
@@ -165,6 +274,44 @@ div.controls > div {
 }
 
 div.controls > div button {
-	width: 60px;
-	height: 60px;
+	font-size: .5rem;
+	width: 40px;
+	height: 40px;
+}
+
+.container {
+	margin: 0 auto;
+}
+
+@media screen and (min-width: 35.5em) {
+	.container {
+		width: 568px;
+	}
+}
+
+@media screen and (min-width: 48em) {
+	.container {
+		width: 768px;
+	}
+	.l-box {
+	    padding: 0 2% 0 0;
+	    -webkit-box-sizing: border-box;
+	    -moz-box-sizing: border-box;
+	    box-sizing: border-box;
+	}
+	.l-box:last-child {
+		padding-right: 0;
+	}
+}
+
+@media screen and (min-width: 64em) {
+	.container {
+		width: 1024px;
+	}
+}
+
+@media screen and (min-width: 80em) {
+	.container {
+		width: 1280px;
+	}
 }

@@ -7,6 +7,7 @@ var PlayerSchema = new Schema({
 	_id: String,
 	x: Number,
 	y: Number,
+	moving: Boolean,
 	facing: String,
 	avatar: String
 });

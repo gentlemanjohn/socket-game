@@ -1,38 +1,40 @@
-<div class="container">
-  <div class="pure-g">
-    <div class="pure-u-1">
-      <div class="centering">
-        <h1>Socket.IO Game</h1>
-        <!-- <a class="pure-button signin" href="#/login">Sign In</a> -->
-        <div class="board">
-        	<div class="player {{player.facing}}" style="top: {{player.y}}px; left: {{player.x}}px; background-image: url(../img/{{player.avatar}});" ng-repeat="player in players track by $index"></div>
-        </div>
-        <section class="interact">
-          <div class="chat-wrapper">
-            <h3>Chat</h3>
-            <div id="chat">
-              <ul>
-                <li ng-repeat="msg in msgs track by $index">{{msg}}</li>
-              </ul>
-            </div>
-            <form ng-submit="sendMsg()" action="">
-              <input type="text" ng-model="msg.text" placeholder="Type your message here" />
-              <input type="submit" />
-            </form>
-          </div>
-          <div class="controls">
-            <h3>Controls</h3>
-            <div>
-              <button ng-click="move('up')"><span class="glyph">&#xf062;</span>(w)</button>
-            </div>
-            <div>
-              <button ng-click="move('left')"><span class="glyph">&#xf060;</span>(a)</button>
-              <button ng-click="move('down')"><span class="glyph">&#xf063;</span>(s)</button>
-              <button ng-click="move('right')"><span class="glyph">&#xf061;</span>(d)</button>
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
+<div id="viewport" class="viewport" measure>
+  <!-- <div class="board" style="-webkit-transform: translate({{shift.x}}px,{{shift.y}}px); translate({{shift.y}}px,{{shift.x}}px); height: {{boardY}}px; width: {{boardX}}px;"> -->
+  <div class="board" style="top: {{shift.y}}px; left: {{shift.x}}px; height: {{boardY}}px; width: {{boardX}}px;">
+  	<div class="player {{player.facing}}" ng-class="{'moving': player.moving}" style="top: {{player.y}}px; left: {{player.x}}px; background-image: url(../img/{{player.avatar}});" ng-repeat="player in players track by $index"></div>
+    <div class="foreground" ng-click="move($event)"></div>
+    <div class="demo panda"></div>
+    <button class="glyph demo add">&#xf067;</button>
+    <button class="glyph demo destroy">&#xf05e;</button>
   </div>
 </div>
+
+<!-- <div class="pure-g dashboard">
+  <div class="pure-u-1">
+    <div class="centering">
+      <section class="interact">
+        <div class="chat-wrapper">
+          <div id="chat">
+            <ul>
+              <li ng-repeat="msg in msgs track by $index">{{msg}}</li>
+            </ul>
+          </div>
+          <form ng-submit="sendMsg()" action="">
+            <input type="text" ng-model="msg.text" placeholder="Type your message here" />
+            <input type="submit" />
+          </form>
+        </div>
+        <div class="controls">
+          <div>
+            <button ng-click="move('up')"><span class="glyph">&#xf062;</span>(w)</button>
+          </div>
+          <div>
+            <button ng-click="move('left')"><span class="glyph">&#xf060;</span>(a)</button>
+            <button ng-click="move('down')"><span class="glyph">&#xf063;</span>(s)</button>
+            <button ng-click="move('right')"><span class="glyph">&#xf061;</span>(d)</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div> -->

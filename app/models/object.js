@@ -9,7 +9,8 @@ var ObjectSchema = new Schema({
 	height: Number,
 	width: Number,
 	sprite: String,
-	actionable: Boolean,
+	prompt: Boolean,
+	function: String,
 	actionX: Number,
 	actionY: Number
 });

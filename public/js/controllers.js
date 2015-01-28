@@ -4,30 +4,49 @@
 
 angular.module('myApp.controllers', [])
 
-  .controller('AppCtrl', function($scope, User, Bears, Players, socket, hotkeys) {
-
+  .controller('AppCtrl', function($scope, $location, User) {
     $scope.logout = function() {
-      User.logout();
-    }
-
-    // example data GET
-    Bears.get()
-      .success(function(data) {
-        $scope.bears = data;
+      User.logout()
+      .success(function() {
+        $location.url('/');
+      })
+      .error(function() {
+        $location.url('/admin');
+        console.log('There was an error logging out.');
       });
+    }
+  })
+
+  .controller('HomeCtrl', function($scope, User, Players, socket, hotkeys) {
 
     // Game
     // ---------------------------------------------------
 
-    socket.on('create player', function(socket_id, x, y, facing, avatar){
-      Players.create($.param({'_id': socket_id, 'x': x, 'y': y, 'facing': facing, 'avatar': avatar}))
-        .success(function() {
-          // Players.get()
-          //   .success(function(data) {
-          //     $scope.players = data;
-          //   });
-        });
+    socket.on('create board', function(boardX, boardY, boardUnit) {
+      $scope.boardX = boardX;
+      $scope.boardY = boardY;
+      $scope.boardUnit = boardUnit;
+    });
+
+    socket.on('create player', function(socket_id, x, y, moving, facing, avatar){
+      Players.create($.param({'_id': socket_id, 'x': x, 'y': y, 'moving': false, 'facing': facing, 'avatar': avatar}));
+      $scope.playerX = x;
+      $scope.playerY = y;
       $scope.$digest();
+    });
+
+    socket.on('viewport shift', function(x, y){
+      $scope.playerX = x;
+      $scope.playerY = y;
+    });
+
+    $scope.$watchGroup(['viewportHeight', 'viewportWidth', 'playerX', 'playerY'], function(newValue, oldValue, scope) {
+      if (newValue !== oldValue) {
+        $scope.shift = {
+          'x': ($scope.viewportWidth/2) - $scope.playerX - ($scope.boardUnit/2),
+          'y': ($scope.viewportHeight/2) - $scope.playerY - ($scope.boardUnit/2)
+        }
+      }
     });
 
     socket.on('get players', function(data) {
@@ -36,10 +55,6 @@ angular.module('myApp.controllers', [])
           $scope.players = data;
         });
       $scope.$digest();
-    });
-
-    socket.on('message', function(data) {
-      console.log(data);
     });
 
     socket.on('delete player', function(socket_id) {
@@ -54,39 +69,39 @@ angular.module('myApp.controllers', [])
       $scope.$digest();
     });
 
-    $scope.move = function(direction) {
-      socket.emit('change player', direction);
+    $scope.move = function(event) {
+      socket.emit('change player', event.offsetX, event.offsetY);
     }
 
-    hotkeys.bindTo($scope)
-      .add({
-        combo: 'w',
-        description: 'Move up',
-        callback: function() {
-          $scope.move('up')
-        }
-      })
-      .add({
-        combo: 'a',
-        description: 'Move left',
-        callback: function() {
-          $scope.move('left')
-        }
-      })
-      .add({
-        combo: 's',
-        description: 'Move down',
-        callback: function() {
-          $scope.move('down')
-        }
-      })
-      .add({
-        combo: 'd',
-        description: 'Move right',
-        callback: function() {
-          $scope.move('right')
-        }
-      });
+    // hotkeys.bindTo($scope)
+    //   .add({
+    //     combo: 'w',
+    //     description: 'Move up',
+    //     callback: function() {
+    //       $scope.move('up')
+    //     }
+    //   })
+    //   .add({
+    //     combo: 'a',
+    //     description: 'Move left',
+    //     callback: function() {
+    //       $scope.move('left')
+    //     }
+    //   })
+    //   .add({
+    //     combo: 's',
+    //     description: 'Move down',
+    //     callback: function() {
+    //       $scope.move('down')
+    //     }
+    //   })
+    //   .add({
+    //     combo: 'd',
+    //     description: 'Move right',
+    //     callback: function() {
+    //       $scope.move('right')
+    //     }
+    //   });
 
     // Chat
     // ---------------------------------------------------
@@ -117,13 +132,14 @@ angular.module('myApp.controllers', [])
           })
           .error(function() {
             $location.url('/login');
+            console.log('There was an error logging in.');
           });
       }
     }
 
   })
 
-  .controller('AdminCtrl', function($scope, Bears, Players) {
+  .controller('AdminCtrl', function($scope, Players) {
 
     Players.get()
       .success(function(data) {
@@ -132,20 +148,6 @@ angular.module('myApp.controllers', [])
 
     // example form data model
     $scope.formData = {};
-
-    // example data POST
-    $scope.submit = function() {
-      if($scope.formData) {
-        Bears.create($scope.formData)
-          .success(function(data) {
-            $scope.formData = {};
-            Bears.get()
-              .success(function(data) {
-                $scope.bears = data;
-              });
-          });
-      }
-    }
 
     // example data DELETE
     $scope.delete = function(socket_id) {
