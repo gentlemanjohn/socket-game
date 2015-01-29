@@ -63,6 +63,32 @@ angular.module('myApp.services', [])
     }
   }])
 
+  .factory('Things', ['$http', function($http){
+    return {
+      get: function() {
+        return $http.get('/api/things');
+      },
+      create: function(thingData) {
+        console.log('thing created');
+        return $http.post('/api/things', thingData);
+      },
+      getId: function(thing_id) {
+        return $http.get('/api/things/' + thing_id);
+      },
+      change: function(thing_id, thingData) {
+        return $http({
+          url: '/api/things/' + thing_id,
+          method: 'PUT',
+          data: thingData,
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+      },
+      delete: function(thing_id) {
+        return $http.delete('/api/things/' + thing_id);
+      }
+    }
+  }])
+
   .factory('socket', function($rootScope) {
     var socket = io();
     return socket;

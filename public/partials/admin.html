@@ -1,13 +1,8 @@
-<div class="container">
+<div class="container admin">
   <div class="pure-g">
     <div class="pure-u-1">
       <h2>Admin Page</h2>
       <a class="pure-button pure-button-secondary" href="#/" ng-click="logout()">Sign Out</a>
-      <h3>Object Generator</h3>
-      <form class="pure-form" ng-submit="submit()">
-        <input type="text" ng-model="formData.name" name="text" placeholder="Bear Name">
-        <input class="pure-button" type="submit" id="submit" value="Submit">
-      </form>
     </div>
   </div>
   <div class="pure-g">
@@ -23,6 +18,15 @@
               Location
             </th>
             <th>
+              Moving?
+            </th>
+            <th>
+              Facing
+            </th>
+            <th>
+              Avatar
+            </th>
+            <th>
               &nbsp;
             </th>
           </tr>
@@ -36,16 +40,123 @@
               {{player.x}},{{player.y}}
             </td>
             <td>
-              <form class="pure-form" ng-submit="delete(player._id)">
-                <input class="pure-button pure-button" type="submit" id="submit" value="Delete">
+              {{player.moving}}
+            </td>
+            <td>
+              {{player.facing}}
+            </td>
+            <td>
+              <div class="player {{player.facing}}" style="background-image: url(../img/{{player.avatar}});"></div>
+            </td>
+            <td>
+              <form class="pure-form" ng-submit="deletePlayer(player._id)">
+                <input class="pure-button" type="submit" id="submit" value="Delete">
               </form>
             </td>
           </tr>
         </tbody>
       </table>
       <br>
-      <form class="pure-form" action="/api/bears" method="get">
-        <input class="pure-button pure-button" type="submit" value="JSON">
+      <form class="pure-form" action="/api/players" method="get">
+        <input class="pure-button" type="submit" value="JSON">
+      </form>
+    </div>
+  </div>
+  <div class="pure-g">
+    <div class="pure-u-1">
+      <h3>Things</h3>
+      <div class="table">
+        <div class="thead">
+          <div class="tr">
+            <div class="td">
+              Name
+            </div>
+            <div class="td">
+              CSS Class
+            </div>
+            <div class="td">
+              Location
+            </div>
+            <div class="td">
+              Height
+            </div>
+            <div class="td">
+              Width
+            </div>
+            <div class="td">
+              Actionable?
+            </div>
+            <div class="td">
+              &nbsp;
+            </div>
+          </div>
+        </div>
+        <div class="tbody">
+          <div class="tr" ng-repeat="thing in things" ng-model="things">
+            <div class="td">
+              {{thing.name}}
+              <br><strong>thing_id:</strong> {{thing._id}}
+            </div>
+            <div class="td">
+              {{thing.css}}
+            </div>
+            <div class="td">
+              {{thing.x}},{{thing.y}}
+            </div>
+            <div class="td">
+              {{thing.ht}}
+            </div>
+            <div class="td">
+              {{thing.wd}}
+            </div>
+            <div class="td">
+              {{thing.actionable}}
+              <br>{{thing.actionFunction}}
+            </div>
+            <div class="td">
+              <div class="{{thing.css}}" style="height: {{thing.ht}}px; width: {{thing.wd}}px;"></div>
+              <form class="pure-form" ng-submit="deleteThing(thing._id)">
+                <input class="pure-button pure-button" type="submit" id="deleteThing" value="Delete">
+              </form>
+            </div>
+          </div>
+          <form class="pure-form tr" ng-submit="submitThing()">
+            <div class="td">
+              <input type="text" ng-model="thingFormData.name" name="Name" placeholder="Name">
+            </div>
+            <div class="td">
+              <input type="text" ng-model="thingFormData.css" name="css" placeholder="CSS Class">
+            </div>
+            <div class="td nowrap">
+              <input class="max-4" type="text" ng-model="thingFormData.x" name="x" placeholder="x" maxlength="4">
+              <input class="max-4" type="text" ng-model="thingFormData.y" name="y" placeholder="y" maxlength="4">
+            </div>
+            <div class="td">
+              <input class="max-4" type="text" ng-model="thingFormData.ht" name="ht" placeholder="Height (px)" maxlength="3">
+            </div>
+            <div class="td">
+              <input class="max-4" type="text" ng-model="thingFormData.wd" name="wd" placeholder="Width (px)" maxlength="3">
+            </div>
+            <div class="td">
+              <label for="option-one" class="pure-radio">
+                <input id="option-one" type="radio" ng-model="thingFormData.actionable" name="optionsRadios" value="false" ng-checked="thingFormData.actionable===false">
+                false
+              </label>
+              <label for="option-two" class="pure-radio">
+                <input id="option-two" type="radio" ng-model="thingFormData.actionable" name="optionsRadios" value="true" ng-checked="thingFormData.actionable===true">
+                true
+              </label>
+              <input ng-show="thingFormData.actionable" type="text" ng-model="thingFormData.actionFunction" name="actionFunction" placeholder="Click Function">
+            </div>
+            <div class="td">
+              <input class="pure-button" type="submit" value="Submit">
+            </div>
+          </form>
+        </div>
+      </div>
+      <br>
+      <form class="pure-form" action="/api/things" method="get">
+        <input class="pure-button" type="submit" value="JSON">
       </form>
     </div>
   </div>

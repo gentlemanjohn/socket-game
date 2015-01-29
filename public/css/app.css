@@ -1,3 +1,5 @@
+/* GLOBAL styles */
+
 * {
 	-webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -26,41 +28,105 @@ span.glyph {
     width: 1em;
 }
 
+/* LOGIN view */
+
 a.signin {
 	margin-bottom: 1.5em;
 }
 
-div.demo.panda {
-	top: 192px;
-	left: 368px;
+/* ADMIN view */
+
+div.admin div.player {
+	position: relative;
+}
+
+div.admin form {
+	/*overflow-x: auto;*/
+}
+
+.table {
+	display: table;
+	border-collapse: collapse;
+	border-spacing: 0;
+	empty-cells: show;
+	border: 1px solid #cbcbcb;
+}
+
+div.admin table,
+div.admin .table {
+	width: 100%;
+}
+
+.thead {
+	display: table-header-group;
+	background: #e0e0e0;
+	color: #000;
+	text-align: left;
+	vertical-align: bottom;
+}
+
+.tbody {
+	display: table-row-group;
+}
+
+.tfoot {
+	display: table-footer-group;
+}
+
+.tr {
+	display: table-row;
+}
+
+.td {
+	display: table-cell;
+	border-left: 1px solid #cbcbcb;
+	border-width: 0 0 0 1px;
+	font-size: inherit;
+	margin: 0;
+	overflow: visible;
+	padding: .5em 1em;
+}
+
+.thead .td {
+	font-weight: bold;
+	border-left: 1px solid #cbcbcb;
+	border-width: 0 0 0 1px;
+	font-size: inherit;
+	margin: 0;
+	overflow: visible;
+	padding: .5em 1em;
+}
+
+input.max-4 {
+	max-width: 4rem;
+}
+
+.td.nowrap {
+	white-space: nowrap;	
+}
+
+/* HOME view */
+
+div.panda {
 	background: url(../img/panda.gif) center center no-repeat;
-	height: 96px;
-	width: 96px;
-	display: none;
 }
 
-.demo {
-	position: absolute;
-	z-index:4;
+div.bigbutton {
+	background: #3498db;
+    border-radius: 1rem;
+    box-shadow: 0px 9px 0px #2980b9, 0px 4px 25px rgba(0,0,0,.7);
+    cursor: pointer;
 }
 
-button.demo.add,
-button.demo.destroy {
-	top: 320px;
-	height: 32px;
-	width: 32px;
+div.bigbutton:hover {
+	border: 3px solid rgba(241,196,15,.6);
 }
 
-button.demo.add {
-	left: 448px;
+div.bigbutton.pushed {
+	-webkit-transform: translateY(9px);
+	transform: translateY(9px);
+	box-shadow: none;
 }
-
-button.demo.destroy {
-	left: 320px;
-
-}
-
-/* Socket Game */
 
 div.viewport {
 	border-bottom: 1px solid #eee;
@@ -90,7 +156,12 @@ div.board div.foreground {
 	z-index: 3;
 }
 
-div.board div.player {
+div.thing {
+	position: absolute;
+	display: inline-block;
+}
+
+div.player {
 	position: absolute;
 	background: transparent url(../img/char1.png) 0 0 no-repeat;
 	top: 0;
@@ -105,7 +176,6 @@ div.board div.player {
     transition: top linear 96ms, left linear 96ms;
     box-sizing: border-box;
 }
-
 
 @-webkit-keyframes movingup {
     0%   {background-position: 0 -96px;}
@@ -123,12 +193,11 @@ div.board div.player {
     100% {background-position: 0 -96px;}
 }
 
-div.board div.player.up {
+div.player.up {
 	background-position: 0 -96px;
-	
 }
 
-div.board div.player.moving.up {
+div.player.moving.up {
 	-webkit-animation: movingup 1s step-start infinite;
     animation: movingup 1s step-start infinite;
 }
@@ -149,11 +218,11 @@ div.board div.player.moving.up {
     100% {background-position: 0 -64px;}
 }
 
-div.board div.player.right {
+div.player.right {
 	background-position: 0 -64px;
 }
 
-div.board div.player.moving.right {
+div.player.moving.right {
 	-webkit-animation: movingright 1s step-start infinite;
     animation: movingright 1s step-start infinite;
 }
@@ -174,11 +243,11 @@ div.board div.player.moving.right {
     100% {background-position: 0 0;}
 }
 
-div.board div.player.down {
+div.player.down {
 	background-position: 0 0;
 }
 
-div.board div.player.moving.down {
+div.player.moving.down {
 	-webkit-animation: movingdown 1s step-start infinite;
     animation: movingdown 1s step-start infinite;
 }
@@ -199,14 +268,59 @@ div.board div.player.moving.down {
     100% {background-position: 0 -32px;}
 }
 
-div.board div.player.left {
+div.player.left {
 	background-position: 0 -32px;
 }
 
-div.board div.player.moving.left {
+div.player.moving.left {
 	-webkit-animation: movingleft 1s step-start infinite;
     animation: movingleft 1s step-start infinite;
 }
+
+
+
+
+
+
+
+
+
+
+
+.demo {
+	position: absolute;
+	z-index:4;
+}
+
+button.demo.add,
+button.demo.destroy {
+	top: 320px;
+	height: 32px;
+	width: 32px;
+}
+
+button.demo.add {
+	left: 448px;
+}
+
+button.demo.destroy {
+	left: 320px;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 section.interact {
 	width: 100%;

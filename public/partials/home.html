@@ -1,11 +1,10 @@
 <div id="viewport" class="viewport" measure>
   <!-- <div class="board" style="-webkit-transform: translate({{shift.x}}px,{{shift.y}}px); translate({{shift.y}}px,{{shift.x}}px); height: {{boardY}}px; width: {{boardX}}px;"> -->
-  <div class="board" style="top: {{shift.y}}px; left: {{shift.x}}px; height: {{boardY}}px; width: {{boardX}}px;">
-  	<div class="player {{player.facing}}" ng-class="{'moving': player.moving}" style="top: {{player.y}}px; left: {{player.x}}px; background-image: url(../img/{{player.avatar}});" ng-repeat="player in players track by $index"></div>
-    <div class="foreground" ng-click="move($event)"></div>
-    <div class="demo panda"></div>
-    <button class="glyph demo add">&#xf067;</button>
-    <button class="glyph demo destroy">&#xf05e;</button>
+  <div id="board" class="board" style="top: {{shift.y}}px; left: {{shift.x}}px; height: {{boardY}}px; width: {{boardX}}px;" ng-click="move($event)">
+  	<div id="{{player._id}}" class="player {{player.facing}}" ng-class="{'moving': player.moving}" style="top: {{player.y}}px; left: {{player.x}}px; background-image: url(../img/{{player.avatar}});" ng-repeat="player in players track by $index"></div>
+    <div id="{{thing._id}}" class="thing {{thing.css}}" style="top: {{thing.y}}px; left: {{thing.x}}px; height: {{thing.ht}}px; width: {{thing.wd}}px;" ng-repeat="thing in things" ng-click="thing.actionFunction">
+    </div>
+    <!-- <div class="foreground" ng-click="move($event)"></div> -->
   </div>
 </div>
 

@@ -17,16 +17,25 @@ angular.module('myApp.controllers', [])
     }
   })
 
-  .controller('HomeCtrl', function($scope, User, Players, socket, hotkeys) {
+  .controller('HomeCtrl', function($scope, User, Players, Things, socket, hotkeys) {
 
     // Game
     // ---------------------------------------------------
+
+    $scope.panda = function() {
+      console.log('panda!');
+    }
 
     socket.on('create board', function(boardX, boardY, boardUnit) {
       $scope.boardX = boardX;
       $scope.boardY = boardY;
       $scope.boardUnit = boardUnit;
     });
+
+    Things.get()
+      .success(function(data) {
+        $scope.things = data;
+      });
 
     socket.on('create player', function(socket_id, x, y, moving, facing, avatar){
       Players.create($.param({'_id': socket_id, 'x': x, 'y': y, 'moving': false, 'facing': facing, 'avatar': avatar}));
@@ -70,7 +79,12 @@ angular.module('myApp.controllers', [])
     });
 
     $scope.move = function(event) {
-      socket.emit('change player', event.offsetX, event.offsetY);
+      console.log(event);
+      if(event.toElement.id != 'board') {
+        socket.emit('change player', event.target.offsetLeft, event.target.offsetTop);
+      } else {
+        socket.emit('change player', event.offsetX, event.offsetY);
+      }
     }
 
     // hotkeys.bindTo($scope)
@@ -139,25 +153,61 @@ angular.module('myApp.controllers', [])
 
   })
 
-  .controller('AdminCtrl', function($scope, Players) {
+  .controller('AdminCtrl', function($scope, Players, Things) {
 
     Players.get()
       .success(function(data) {
         $scope.players = data;
       });
 
-    // example form data model
-    $scope.formData = {};
-
-    // example data DELETE
-    $scope.delete = function(socket_id) {
+    $scope.deletePlayer = function(socket_id) {
       Players.delete(socket_id)
         .success(function(data) {
           Players.get()
-              .success(function(data) {
-                $scope.players = data;
-              });
+            .success(function(data) {
+              $scope.players = data;
+            });
         });
+    }
+
+    Things.get()
+      .success(function(data) {
+        $scope.things = data;
+      });
+
+    $scope.deleteThing = function(thing_id) {
+      Things.delete(thing_id)
+        .success(function(data) {
+          Things.get()
+            .success(function(data) {
+              $scope.things = data;
+            });
+        });
+    }
+
+    $scope.thingFormData = {};
+
+    $scope.thingFormData.actionable = false;
+
+    $scope.submitThing = function() {
+      if($scope.thingFormData) {
+        Things.create($scope.thingFormData)
+          .success(function() {
+            console.log('huzzah!');
+          });
+        $scope.thingFormData = {};
+        Things.get()
+          .success(function(data) {
+            console.log('GET');
+            $scope.things = data;
+          });
+
+
+      }
+    }
+
+    $scope.alerted = function() {
+      console.log('GAH!');
     }
 
   });
